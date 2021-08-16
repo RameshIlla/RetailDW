@@ -14,7 +14,7 @@ Now run the below command to run the program in a container
 	docker run --name retaildw -it retaildw  
 </pre>
 
-#How it works  
+# How it works  
 Step 1:   
 The program first loops though all the json files in the given directoiries (3 in this case) and loads the combined data from all json files into one data frame per directory.  
 Then it prints the flattened dataframes showing the historical data of Accounts, Cards and Savings accounts data frames.

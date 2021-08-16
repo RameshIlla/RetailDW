@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import regex as re
 # this finds our json files
-cust_accounts_path = './data/accounts/'
-cards_path = './data/cards/'
-savings_accounts_path = './data/savings_accounts/'
+cust_accounts_path = '/data/accounts/'
+cards_path = '/data/cards/'
+savings_accounts_path = '/data/savings_accounts/'
 
 # Loops through json files in a given directory and load data into a data frame
 def get_df_from_directory(directory):

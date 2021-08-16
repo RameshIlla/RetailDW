@@ -1,5 +1,5 @@
 ## RetailDW
-Load json files and derive insights of retail banking customer transaction
+Load json files and derive insights of retail banking customer transactions
 # How to start
 Install Docker  
 

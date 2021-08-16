@@ -7,7 +7,7 @@ cust_accounts_path = './data/accounts/'
 cards_path = './data/cards/'
 savings_accounts_path = './data/savings_accounts/'
 
-
+# Loops through json files in a given directory and load data into a data frame
 def get_df_from_directory(directory):
     #Get the list of json files in the  accounts directory
     json_files = [pos_json for pos_json in os.listdir(directory) if pos_json.endswith('.json')]
@@ -24,6 +24,7 @@ def get_df_from_directory(directory):
     df_directory = pd.concat(df_file) 
     return df_directory
 
+# Clean up the raw customer accounts data frame to be able to show meaningful data and to join with cards and saving accounts later
 def process_cust_account (df_cust_accounts):
     df_cust_accounts.columns=['cust_id','cust_op','cust_ts','cust_account_id','name','address','phone_number','email','set_phone_number','sa_id','set_address','set_email','card_id']
 
@@ -51,7 +52,7 @@ def process_cust_account (df_cust_accounts):
     df_cust_accounts= df_cust_accounts.dropna()
     return df_cust_accounts
 
-###########################################################################
+# Clean up the raw cards frame to be able to show meaningful data and to join with customer accounts and saving accounts later
 def process_cards(df_cards):
     df_cards.columns = ['card_global_id','card_op','datetime','card_id','card_number','card_credit_used','card_monthly_limit','card_status','card_set_status','card_set_credit_used']
 
@@ -75,7 +76,7 @@ def process_cards(df_cards):
     return df_cards
 
 
-###########################################################################
+# Clean up the raw savings accounts data frame to be able to show meaningful data and to join with customer accounts and saving accounts later
 def process_savings_accounts(df_savings_accounts):
 
     df_savings_accounts.columns=['sa_global_id','sa_op','datetime','sa_id','sa_balance','sa_interest_rate_percent','sa_status','sa_set_balance','sa_set_interest_rate_percent']
@@ -139,7 +140,7 @@ def join_cust_cards_sa(df_cust_accounts,df_cards, df_savings_accounts):
 
 
     return df_cust_savings_acount_cards
-#print(df_cust_savings_acount_cards)
+
 
 #Main function            
 if __name__ == "__main__":

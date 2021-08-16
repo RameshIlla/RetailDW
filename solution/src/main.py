@@ -113,32 +113,13 @@ def join_cust_cards_sa(df_cust_accounts,df_cards, df_savings_accounts):
 
     #df_cust_savings_account = pd.merge(df_cust_accounts, df_savings_accounts,  how='inner',left_on='sa_id',right_on='sa_id')
     df_cust_cards = pd.merge(df_cust_accounts[['cust_account_id','name','card_id']],df_cards [['card_id','datetime','card_number','card_credit_used' ,'card_balance' , 'card_monthly_limit' ]], how='inner', left_on ='card_id',right_on='card_id')
-    #df_cust_cards.insert(2,'sa_id', '')
-    #df_cust_cards.insert(8,'sa_trans_amount', '')
-    #df_cust_cards.insert(9,'sa_balance', '')
-    #df_cust_cards=df_cust_cards.rename(columns={'card_ts':'ts'})
 
-    #print(df_cust_cards)
-
-    #print(df_savings_accounts)
-    #df_savings_accounts=df_savings_accounts[[]].drop_duplicates()
     df_cust_savings_account = pd.merge(df_cust_accounts[['cust_account_id','name','sa_id']].drop_duplicates(), df_savings_accounts[['sa_id','datetime','sa_trans_amt','sa_balance']],  how='inner',left_on='sa_id',right_on='sa_id')
-
-
-    #df_cust_savings_account = pd.merge(df_cust_accounts, df_savings_accounts[['sa_op','sa_ts','sa_id','sa_balance','sa_interest_rate_percent','sa_status']],  how='inner',left_on='sa_id',right_on='sa_id')
-    #df_cust_savings_account = pd.merge(df_cust_accounts, df_savings_accounts[['sa_op','sa_ts','sa_id','sa_balance','sa_interest_rate_percent','sa_status']],  how='inner',on='sa_id')#,right_on='sa_account_id')
-    #df_cust_savings_account = df_cust_accounts.join(df_savings_accounts, how = 'left',on='sa_id')
-    #df_cust_savings_account = df_cust_accounts.set_index('sa_id').join(df_savings_accounts.set_index('sa_id'))
-
-    #print(df_savings_accounts)
-    #print(df_cust_savings_account)
     df_cust_savings_acount_cards =pd.concat([df_cust_cards,df_cust_savings_account])
     df_cust_savings_acount_cards=df_cust_savings_acount_cards.sort_values(by='datetime',ascending='true')
     df_cust_savings_acount_cards['datetime'] = pd.to_datetime(df_cust_savings_acount_cards['datetime'])
     df_cust_savings_acount_cards.sa_balance=df_cust_savings_acount_cards.groupby('cust_account_id').sa_balance.apply(lambda x: x.ffill())
-                    #f_savings_accounts.sa_status=df_savings_accounts.groupby('sa_global_id').sa_status.apply(lambda x: x.ffill())
-
-
+    #f_savings_accounts.sa_status=df_savings_accounts.groupby('sa_global_id').sa_status.apply(lambda x: x.ffill())
     return df_cust_savings_acount_cards
 
 
@@ -151,11 +132,11 @@ if __name__ == "__main__":
     df_savings_accounts=get_df_from_directory(savings_accounts_path)
    
     #print raw dataframes
-    print('*************************************Raw flattened data from Accounts json**************************************************')
+    print('\n\n*************************************Raw flattened data from Accounts json**************************************************\n')
     print (df_cust_accounts)
-    print('*************************************Raw flattened data from Cards json******************************************************')
+    print('\n\n*************************************Raw flattened data from Cards json******************************************************\n')
     print (df_cards)
-    print('*************************************Raw flattened data from Savings Accounts json******************************************')
+    print('\n\n*************************************Raw flattened data from Savings Accounts json******************************************\n')
     print (df_savings_accounts)
     
     #process and clean up data frames
@@ -164,10 +145,11 @@ if __name__ == "__main__":
     df_savings_accounts = process_savings_accounts(df_savings_accounts)
     
     #Finally join the processed dataframes to see historical transaction details made on cards and savings accounts
-    
     df_cust_savings_acount_cards = join_cust_cards_sa(df_cust_accounts,df_cards, df_savings_accounts)
-    print('**************************Joined View of transactions made on Cards and Savings accounts of the customers******************')
+    print('\n\n**************************Joined View of transactions made on Cards and Savings accounts of the customers******************\n')
     print(df_cust_savings_acount_cards)
+    print()
+    
     
        
     
